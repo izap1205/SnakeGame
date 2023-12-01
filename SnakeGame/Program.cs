@@ -138,7 +138,38 @@ class Program
             body.RemoveAt(body.Count - 1);
         }
     }
+    static void DrawSnakeBody(List<Pixel> body, ConsoleColor color)
+    {
+        Console.ForegroundColor = color;
+        foreach (var segment in body)
+        {
+            Console.SetCursorPosition(segment.xPos, segment.yPos);
+            Console.Write("■");
+        }
+    }
 
+    static bool CheckCollision(Pixel player, List<Pixel> body, int screenwidth, int screenheight)
+    {
+        foreach (var segment in body)
+        {
+            if (player.xPos == segment.xPos && player.yPos == segment.yPos)
+                return true;
+        }
+        return false;
+    }
+
+    static void GameOver(int scorePlayer1, int scorePlayer2)
+    {
+        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.SetCursorPosition(Console.WindowWidth / 5, Console.WindowHeight / 2);
+        Console.WriteLine("Game Over");
+        Console.SetCursorPosition(Console.WindowWidth / 5, Console.WindowHeight / 2 + 1);
+        Console.WriteLine($"Player 1 Score: {scorePlayer1} | Player 2 Score: {scorePlayer2}");
+        Console.SetCursorPosition(Console.WindowWidth / 5, Console.WindowHeight / 2 + 2);
+        Console.ReadKey(true);
+        Environment.Exit(0);
+    }
 }
 
 
